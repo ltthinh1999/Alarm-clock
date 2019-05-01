@@ -16,7 +16,7 @@ April 2019
 MainGUI()
 
 Func MainGUI()
-	Global $MainGUI, $CurrentTime, $h, $m
+	Global $MainGUI, $CurrentTime, $setH, $setM
 	Local $idMsg = 0
 
 	$MainGUI = GUICreate("Alarm clock", 477, 220, 444, 141)
@@ -48,22 +48,20 @@ Func MainGUI()
 
 	While 1
 		UpdateGUI()
-		$h = GUICtrlRead($SetHour)
-		$m = GUICtrlRead($SetMin)
-		TimeCouting($h, $m)
+		$setH = GUICtrlRead($SetHour)
+		$setM = GUICtrlRead($SetMin)
+		TimeCouting()
 		$idMsg = GUIGetMsg()
 		Select
 			Case $idMsg = $GUI_EVENT_CLOSE
 				ExitLoop
 			Case $idMsg = $SetButton
-				MsgBox(0, "Test", $h & ":" & $m)
+;~ 				???
 		EndSelect
 	WEnd
 EndFunc
 
-Func TimeCouting($h1, $m1)
-
-
+Func TimeCouting()
 
 EndFunc
 
