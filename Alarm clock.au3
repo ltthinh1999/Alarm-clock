@@ -1,13 +1,15 @@
 #cs ----------------------------------------------------------------------------
 
-Alarm clock.
+Simple alarm clock
 
-Author; Thinh Le
+Author: Thinh Le
 
 April 2019
 
 #ce ----------------------------------------------------------------------------
 
+#include <WINAPI.au3>
+#include <WinAPIMisc.au3>
 #include <WindowsConstants.au3>
 #include <Date.au3>
 #include <GUIConstantsEx.au3>
@@ -53,13 +55,13 @@ EndFunc
 Func MainState()   ; Normal state, nothing set up yet
 	While 1
 		UpdateTime()
-		$setH = GUICtrlRead($SetHour)
-		$setM = GUICtrlRead($SetMin)
 		$msg = GUIGetMsg()
 		Select
 			Case $msg = $GUI_EVENT_CLOSE
 				Exit
 			Case $msg = $SetButton
+				$setH = Int(GUICtrlRead($SetHour))
+				$setM = Int(GUICtrlRead($SetMin))
 				GUICtrlSetState($SetHour, $GUI_DISABLE)
 				GUICtrlSetState($SetMin, $GUI_DISABLE)
 				GUICtrlSetState($SetButton, $GUI_DISABLE)
@@ -97,7 +99,17 @@ Func UpdateTime()
 	EndIf
 EndFunc
 
-Func AlarmState()	;Alarm ringing
-	SoundPlay("Alarm.mp3", 0)
+Func AlarmState()
+	$Alarm = "Alarm.wav"
+	DllCall( "winmm.dll", "int", "mciExecute", "str", "play " & $Alarm)
+
 	GUICtrlDelete($CancelAlarm)
+	GUICtrlSetState($SetHour, $GUI_ENABLE)
+	GUICtrlSetState($SetMin, $GUI_ENABLE)
+	GUICtrlSetState($SetButton, $GUI_ENABLE)
+	MainState()
 EndFunc
+
+
+
+
